@@ -1,0 +1,180 @@
+{
+  "title": "Mobile App Launch",
+  "paths": [
+    {
+      "id": "p1",
+      "name": "Design & Frontend",
+      "description": "UI/UX design and frontend development",
+      "color": "#e63946"
+    },
+    {
+      "id": "p2",
+      "name": "Backend & Services",
+      "description": "Server-side development and API layer",
+      "color": "#2a9d8f"
+    },
+    {
+      "id": "p3",
+      "name": "QA & Release",
+      "description": "Testing, hardening and production release",
+      "color": "#457b9d"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "m1",
+      "name": "Kickoff",
+      "description": "Project kickoff — team aligned, scope locked",
+      "x": 80,
+      "y": 280
+    },
+    {
+      "id": "m2",
+      "name": "Requirements",
+      "description": "All requirements documented and approved by stakeholders",
+      "x": 280,
+      "y": 280
+    },
+    {
+      "id": "m3",
+      "name": "Design Done",
+      "description": "Wireframes, prototypes and visual designs approved",
+      "x": 480,
+      "y": 160
+    },
+    {
+      "id": "m4",
+      "name": "Backend Ready",
+      "description": "Database, business logic and server deployed to staging",
+      "x": 480,
+      "y": 400
+    },
+    {
+      "id": "m5",
+      "name": "Frontend Built",
+      "description": "All screens implemented and connected to mock APIs",
+      "x": 680,
+      "y": 160
+    },
+    {
+      "id": "m6",
+      "name": "APIs Ready",
+      "description": "REST endpoints live, authenticated and documented",
+      "x": 680,
+      "y": 400
+    },
+    {
+      "id": "m7",
+      "name": "Integrated",
+      "description": "Frontend fully wired to production-grade backend services",
+      "x": 880,
+      "y": 280
+    },
+    {
+      "id": "m8",
+      "name": "QA Passed",
+      "description": "All test cases passed, zero critical open bugs",
+      "x": 1060,
+      "y": 280
+    },
+    {
+      "id": "m9",
+      "name": "Launch",
+      "description": "App live on production — App Store and Play Store",
+      "x": 1240,
+      "y": 280
+    }
+  ],
+  "activities": [
+    {
+      "id": "a1",
+      "name": "Requirements",
+      "description": "Workshops, interviews and backlog grooming",
+      "fromMilestoneId": "m1",
+      "toMilestoneId": "m2",
+      "pathId": "p1",
+      "duration": 5,
+      "isOngoing": false
+    },
+    {
+      "id": "a2",
+      "name": "UX Design",
+      "description": "User flows, wireframes and high-fidelity mockups",
+      "fromMilestoneId": "m2",
+      "toMilestoneId": "m3",
+      "pathId": "p1",
+      "duration": 10,
+      "isOngoing": false
+    },
+    {
+      "id": "a3",
+      "name": "Backend Dev",
+      "description": "Database schema, business logic, auth and infrastructure",
+      "fromMilestoneId": "m2",
+      "toMilestoneId": "m4",
+      "pathId": "p2",
+      "duration": 18,
+      "isOngoing": true
+    },
+    {
+      "id": "a4",
+      "name": "Frontend Dev",
+      "description": "React Native screens, navigation and state management",
+      "fromMilestoneId": "m3",
+      "toMilestoneId": "m5",
+      "pathId": "p1",
+      "duration": 12,
+      "isOngoing": true
+    },
+    {
+      "id": "a5",
+      "name": "API Layer",
+      "description": "REST endpoints, rate limiting, versioning and OpenAPI docs",
+      "fromMilestoneId": "m4",
+      "toMilestoneId": "m6",
+      "pathId": "p2",
+      "duration": 6,
+      "isOngoing": false
+    },
+    {
+      "id": "a6",
+      "name": "UI Integration",
+      "description": "Replace mock data with live API calls, handle error states",
+      "fromMilestoneId": "m5",
+      "toMilestoneId": "m7",
+      "pathId": "p1",
+      "duration": 5,
+      "isOngoing": false
+    },
+    {
+      "id": "a7",
+      "name": "Svc Integration",
+      "description": "Integration tests, service mesh config and contract validation",
+      "fromMilestoneId": "m6",
+      "toMilestoneId": "m7",
+      "pathId": "p2",
+      "duration": 5,
+      "isOngoing": false
+    },
+    {
+      "id": "a8",
+      "name": "System Testing",
+      "description": "End-to-end test execution, performance tests and bug triage",
+      "fromMilestoneId": "m7",
+      "toMilestoneId": "m8",
+      "pathId": "p3",
+      "duration": 10,
+      "isOngoing": false
+    },
+    {
+      "id": "a9",
+      "name": "Release Prep",
+      "description": "App store submission, infrastructure hardening and go-live runbook",
+      "fromMilestoneId": "m8",
+      "toMilestoneId": "m9",
+      "pathId": "p3",
+      "duration": 3,
+      "isOngoing": false
+    }
+  ]
+}
