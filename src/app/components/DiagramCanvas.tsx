@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useState, useCallback, useEffect, forwardRef, useImperativeHandle, useMemo } from 'react';
 import { Diagram, Milestone, Activity, Selection } from '../types';
 
 const STATION_RADIUS = 18;
@@ -19,6 +19,7 @@ interface Props {
   tool: 'select' | 'add-milestone' | 'add-activity';
   onConnectMilestones: (fromId: string, toId: string) => void;
   showCritical: boolean;
+  criticalFocus: boolean;
   theme: 'dark' | 'light';
 }
 
@@ -37,6 +38,7 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
   tool,
   onConnectMilestones,
   showCritical,
+  criticalFocus,
   theme,
 }, ref) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -78,6 +80,16 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
     connectingStroke: 'rgba(255,255,255,0.4)',
     centerDot: '#e8eaf0',
   };
+
+  // Milestones that sit on at least one critical activity — used for dimming in criticalFocus mode
+  const criticalMilestoneIds = useMemo(() => {
+    if (!criticalFocus) return null;
+    const ids = new Set<string>();
+    computedActivities.forEach(a => {
+      if (a.isCritical) { ids.add(a.fromMilestoneId); ids.add(a.toMilestoneId); }
+    });
+    return ids;
+  }, [criticalFocus, computedActivities]);
 
   useImperativeHandle(ref, () => ({
     exportPng(title: string) {
@@ -294,6 +306,11 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
       onMouseLeave={handleMouseUp}
       style={{ cursor: tool === 'add-milestone' ? 'crosshair' : tool === 'add-activity' ? 'cell' : 'default', background: colors.canvasBg }}
     >
+      <style>{`
+        @keyframes marchingAnts { to { stroke-dashoffset: -28; } }
+        .activity-ongoing { animation: marchingAnts 0.7s linear infinite; }
+      `}</style>
+
       <defs>
         <pattern id="grid" width={GRID_SIZE} height={GRID_SIZE} patternUnits="userSpaceOnUse">
           <path d={`M ${GRID_SIZE} 0 L 0 0 0 ${GRID_SIZE}`} fill="none" stroke={colors.gridStroke} strokeWidth="1" />
@@ -352,9 +369,10 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
         if (!d) return null;
         const isSelected = selection.type === 'activity' && selection.id === act.id;
         const isCritical = showCritical && act.isCritical;
+        const dimmed = criticalFocus && !act.isCritical;
         const mid = actMidpoint(act);
         return (
-          <g key={act.id}>
+          <g key={act.id} opacity={dimmed ? 0.1 : 1}>
             {/* Hit area */}
             <path
               d={d} fill="none" stroke="transparent" strokeWidth="16"
@@ -363,7 +381,7 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
             />
             {/* Shadow for critical */}
             {isCritical && (
-              <path d={d} fill="none" stroke="#ffcc00" strokeWidth="6" opacity="0.3" filter="url(#glow-strong)" />
+              <path d={d} fill="none" stroke="#ffcc00" strokeWidth={criticalFocus ? 10 : 6} opacity={criticalFocus ? 0.45 : 0.3} filter="url(#glow-strong)" />
             )}
             {/* Main line */}
             <path
@@ -377,6 +395,16 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
             {/* Critical overlay */}
             {isCritical && (
               <path d={d} fill="none" stroke="#ffcc00" strokeWidth="1.5" strokeDasharray="8 6" opacity="0.9" />
+            )}
+            {/* Ongoing (in-progress) marching-ants overlay */}
+            {act.isOngoing && (
+              <path
+                className="activity-ongoing"
+                d={d} fill="none"
+                stroke="#22c55e" strokeWidth="3"
+                strokeDasharray="8 6" opacity="0.9"
+                style={{ pointerEvents: 'none' }}
+              />
             )}
             {/* Activity label */}
             {mid && (
@@ -421,9 +449,11 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
           .filter(Boolean) as string[];
         const uniqueColors = [...new Set(pathColors)];
 
+        const mDimmed = criticalFocus && !criticalMilestoneIds?.has(m.id);
         return (
           <g
             key={m.id}
+            opacity={mDimmed ? 0.15 : 1}
             style={{ cursor: tool === 'select' ? 'grab' : 'crosshair' }}
             onMouseDown={e => handleMilestoneMouseDown(e, m)}
             onMouseUp={e => handleMilestoneMouseUp(e, m)}

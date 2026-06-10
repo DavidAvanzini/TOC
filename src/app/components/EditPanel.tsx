@@ -164,6 +164,18 @@ export function EditPanel({
                 <Field label="Duration (days)">
                   <NumberInput value={selectedActivity.duration} onChange={v => onUpdateActivity(selectedActivity.id, { duration: v })} />
                 </Field>
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 accent-green-500 cursor-pointer"
+                    checked={!!selectedActivity.isOngoing}
+                    onChange={e => onUpdateActivity(selectedActivity.id, { isOngoing: e.target.checked })}
+                  />
+                  <span className="text-sm text-foreground">In progress</span>
+                  {selectedActivity.isOngoing && (
+                    <span className="text-xs text-green-400 ml-1">● ongoing</span>
+                  )}
+                </label>
                 <Field label="Path">
                   <select
                     className="bg-secondary border border-border rounded px-3 py-1.5 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-primary"

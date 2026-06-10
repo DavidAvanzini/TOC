@@ -14,6 +14,7 @@ export interface Activity {
   toMilestoneId: string;
   pathId: string;
   duration: number;
+  isOngoing?: boolean;
   earlyStart?: number;
   earlyFinish?: number;
   lateStart?: number;

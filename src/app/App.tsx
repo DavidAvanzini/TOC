@@ -50,6 +50,7 @@ export default function App() {
   const [panelTab, setPanelTab] = useState<'element' | 'paths' | 'consistency'>('element');
   const [activePathId, setActivePathId] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [criticalFocus, setCriticalFocus] = useState(false);
   const canvasRef = useRef<DiagramCanvasHandle>(null);
 
   useEffect(() => {
@@ -187,6 +188,7 @@ export default function App() {
 
       if (e.key === 'Escape') {
         setSelection({ type: null, id: null });
+        setCriticalFocus(false);
         return;
       }
 
@@ -248,12 +250,21 @@ export default function App() {
           </div>
         )}
         <div className="flex-1" />
-        <span className="text-xs text-muted-foreground shrink-0">
-          {diagram.milestones.length} stations · {diagram.activities.length} activities
-          {showCritical && computedActivities.filter(a => a.isCritical).length > 0 && (
-            <span className="text-yellow-400 ml-2">· {computedActivities.filter(a => a.isCritical).length} critical</span>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0">
+          <span>{diagram.milestones.length} stations · {diagram.activities.length} activities</span>
+          {diagram.activities.filter(a => a.isOngoing).length > 0 && (
+            <span className="text-green-400">· {diagram.activities.filter(a => a.isOngoing).length} ongoing</span>
           )}
-        </span>
+          {showCritical && computedActivities.filter(a => a.isCritical).length > 0 && (
+            <button
+              onClick={() => setCriticalFocus(v => !v)}
+              title={criticalFocus ? 'Click to deselect critical path focus' : 'Click to focus on critical path'}
+              className={`px-2 py-0.5 rounded transition-all ${criticalFocus ? 'bg-yellow-400/20 text-yellow-300 ring-1 ring-yellow-400/40' : 'text-yellow-400 hover:bg-yellow-400/10'}`}
+            >
+              · {computedActivities.filter(a => a.isCritical).length} critical
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -270,6 +281,7 @@ export default function App() {
             tool={tool}
             onConnectMilestones={handleConnectMilestones}
             showCritical={showCritical}
+            criticalFocus={criticalFocus}
             theme={theme}
           />
           {tool !== 'select' && (
