@@ -1,18 +1,24 @@
-# TOC — Critical Path Diagram Editor
+# TOC — Train of Consequences
 
-This repository contains the source code for a Critical Path Diagram editor called **TOC (Train OF Consequences)**.
+**TOC** is a browser-based Critical Path Method (CPM) diagram editor. Build project networks from stations (milestones) and activities, and the CPM engine highlights the critical path in real time.
 
-The editor is built with React and Vite and allows you to create milestones, connect them with activities, manage path lines, and visualize the critical path using CPM analysis.
+![Mobile App Launch example diagram](examples/mobile-app-launch-preview.svg)
+
+> *Example: Mobile App Launch — 9 stations, 3 lines, 47-day critical path through the backend branch.*  
+> Load it yourself: **Load → `examples/mobile-app-launch.json`**
 
 ## Features
 
-- Interactive SVG canvas with milestone drag-and-drop
-- Add milestones and draw activities between them
-- Define and manage multiple path lines
-- Critical path highlighting and CPM analysis
-- JSON save/load diagram support
-- Local storage autosave
-- Docker-ready development container
+- Interactive SVG canvas — drag stations, click or drag to connect activities
+- Multiple named path lines, each with its own colour
+- Real-time CPM engine — forward/backward pass, float, critical path detection
+- Critical path focus mode — click the stat counter to dim non-critical elements
+- Mark activities as **in progress** — animated green overlay on the canvas
+- Light / dark theme toggle
+- Export diagram as **PNG** (2× resolution, clean background — ready for PowerPoint and email)
+- Delete selected element with the **Del** key; **Esc** to deselect
+- JSON save / load and automatic localStorage persistence
+- Docker-ready production container
 
 ## Getting Started
 

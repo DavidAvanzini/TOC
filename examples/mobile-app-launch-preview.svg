@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 128 1300 370" width="1300" height="370">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0L0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow2"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="ap1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="#e63946"/></marker>
+    <marker id="ap2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="#2a9d8f"/></marker>
+    <marker id="ap3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="#457b9d"/></marker>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="128" width="1300" height="370" fill="#0f1117"/>
+  <rect x="0" y="128" width="1300" height="370" fill="url(#grid)"/>
+
+  <!-- Legend bar -->
+  <rect x="0" y="128" width="1300" height="28" fill="#1a1d27"/>
+  <rect x="0" y="156" width="1300" height="1" fill="rgba(255,255,255,0.08)"/>
+  <text x="20" y="147" fill="#e8eaf0" font-size="13" font-weight="600" font-family="Inter, system-ui, sans-serif">Mobile App Launch</text>
+  <!-- Legend items -->
+  <line x1="220" y1="142" x2="248" y2="142" stroke="#e63946" stroke-width="2"/>
+  <text x="253" y="147" fill="#8b90a7" font-size="11" font-family="Inter, system-ui, sans-serif">Design &amp; Frontend</text>
+  <line x1="390" y1="142" x2="418" y2="142" stroke="#2a9d8f" stroke-width="2"/>
+  <text x="423" y="147" fill="#8b90a7" font-size="11" font-family="Inter, system-ui, sans-serif">Backend &amp; Services</text>
+  <line x1="565" y1="142" x2="593" y2="142" stroke="#457b9d" stroke-width="2"/>
+  <text x="598" y="147" fill="#8b90a7" font-size="11" font-family="Inter, system-ui, sans-serif">QA &amp; Release</text>
+  <line x1="740" y1="142" x2="768" y2="142" stroke="#ffcc00" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="773" y="147" fill="#8b90a7" font-size="11" font-family="Inter, system-ui, sans-serif">Critical Path</text>
+  <line x1="880" y1="142" x2="908" y2="142" stroke="#22c55e" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="913" y="147" fill="#8b90a7" font-size="11" font-family="Inter, system-ui, sans-serif">In Progress</text>
+  <text x="1240" y="147" fill="#ffcc00" font-size="11" font-family="Inter, system-ui, sans-serif" text-anchor="middle">47 days · 6 critical</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- ACTIVITIES                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- a1: Requirements  m1(80,280)→m2(280,280)  red  CRITICAL -->
+  <path d="M80 280L280 280" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M80 280L280 280" fill="none" stroke="#e63946" stroke-width="3" marker-end="url(#ap1)" opacity="0.85"/>
+  <path d="M80 280L280 280" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <rect x="134" y="269" width="92" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="180" y="280" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">Requirements</text>
+  <rect x="169" y="283" width="22" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="180" y="293" text-anchor="middle" dominant-baseline="middle" fill="#e63946" font-size="10" font-family="monospace">5d</text>
+
+  <!-- a2: UX Design  m2(280,280)→m3(480,160)  red  not critical -->
+  <path d="M280 280L356 280Q380 280 380 256L380 184Q380 160 404 160L480 160" fill="none" stroke="#e63946" stroke-width="3" marker-end="url(#ap1)" opacity="0.85"/>
+  <rect x="344" y="209" width="71" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="380" y="220" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">UX Design</text>
+  <rect x="365" y="223" width="29" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="380" y="233" text-anchor="middle" dominant-baseline="middle" fill="#e63946" font-size="10" font-family="monospace">10d</text>
+
+  <!-- a3: Backend Dev  m2(280,280)→m4(480,400)  teal  CRITICAL + ONGOING -->
+  <path d="M280 280L356 280Q380 280 380 304L380 376Q380 400 404 400L480 400" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M280 280L356 280Q380 280 380 304L380 376Q380 400 404 400L480 400" fill="none" stroke="#2a9d8f" stroke-width="3" marker-end="url(#ap2)" opacity="0.85"/>
+  <path d="M280 280L356 280Q380 280 380 304L380 376Q380 400 404 400L480 400" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <path d="M280 280L356 280Q380 280 380 304L380 376Q380 400 404 400L480 400" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="8 6" stroke-dashoffset="-7" opacity="0.85"/>
+  <rect x="337" y="329" width="85" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="380" y="340" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">Backend Dev</text>
+  <rect x="365" y="343" width="29" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="380" y="353" text-anchor="middle" dominant-baseline="middle" fill="#2a9d8f" font-size="10" font-family="monospace">18d</text>
+
+  <!-- a4: Frontend Dev  m3(480,160)→m5(680,160)  red  not critical + ONGOING -->
+  <path d="M480 160L680 160" fill="none" stroke="#e63946" stroke-width="3" marker-end="url(#ap1)" opacity="0.85"/>
+  <path d="M480 160L680 160" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="8 6" stroke-dashoffset="-7" opacity="0.85"/>
+  <rect x="534" y="149" width="92" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="580" y="160" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">Frontend Dev</text>
+  <rect x="565" y="163" width="29" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="580" y="173" text-anchor="middle" dominant-baseline="middle" fill="#e63946" font-size="10" font-family="monospace">12d</text>
+
+  <!-- a5: API Layer  m4(480,400)→m6(680,400)  teal  CRITICAL -->
+  <path d="M480 400L680 400" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M480 400L680 400" fill="none" stroke="#2a9d8f" stroke-width="3" marker-end="url(#ap2)" opacity="0.85"/>
+  <path d="M480 400L680 400" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <rect x="544" y="389" width="71" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="580" y="400" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">API Layer</text>
+  <rect x="565" y="403" width="22" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="576" y="413" text-anchor="middle" dominant-baseline="middle" fill="#2a9d8f" font-size="10" font-family="monospace">6d</text>
+
+  <!-- a6: UI Integration  m5(680,160)→m7(880,280)  red  not critical -->
+  <path d="M680 160L756 160Q780 160 780 184L780 256Q780 280 804 280L880 280" fill="none" stroke="#e63946" stroke-width="3" marker-end="url(#ap1)" opacity="0.85"/>
+  <rect x="727" y="209" width="106" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="780" y="220" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">UI Integration</text>
+  <rect x="769" y="223" width="22" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="780" y="233" text-anchor="middle" dominant-baseline="middle" fill="#e63946" font-size="10" font-family="monospace">5d</text>
+
+  <!-- a7: Svc Integration  m6(680,400)→m7(880,280)  teal  CRITICAL -->
+  <path d="M680 400L756 400Q780 400 780 376L780 304Q780 280 804 280L880 280" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M680 400L756 400Q780 400 780 376L780 304Q780 280 804 280L880 280" fill="none" stroke="#2a9d8f" stroke-width="3" marker-end="url(#ap2)" opacity="0.85"/>
+  <path d="M680 400L756 400Q780 400 780 376L780 304Q780 280 804 280L880 280" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <rect x="722" y="329" width="113" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="780" y="340" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">Svc Integration</text>
+  <rect x="769" y="343" width="22" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="780" y="353" text-anchor="middle" dominant-baseline="middle" fill="#2a9d8f" font-size="10" font-family="monospace">5d</text>
+
+  <!-- a8: System Testing  m7(880,280)→m8(1060,280)  blue  CRITICAL -->
+  <path d="M880 280L1060 280" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M880 280L1060 280" fill="none" stroke="#457b9d" stroke-width="3" marker-end="url(#ap3)" opacity="0.85"/>
+  <path d="M880 280L1060 280" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <rect x="917" y="269" width="106" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="970" y="280" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">System Testing</text>
+  <rect x="955" y="283" width="29" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="970" y="293" text-anchor="middle" dominant-baseline="middle" fill="#457b9d" font-size="10" font-family="monospace">10d</text>
+
+  <!-- a9: Release Prep  m8(1060,280)→m9(1240,280)  blue  CRITICAL -->
+  <path d="M1060 280L1240 280" fill="none" stroke="#ffcc00" stroke-width="8" opacity="0.3" filter="url(#glow2)"/>
+  <path d="M1060 280L1240 280" fill="none" stroke="#457b9d" stroke-width="3" marker-end="url(#ap3)" opacity="0.85"/>
+  <path d="M1060 280L1240 280" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.9"/>
+  <rect x="1104" y="269" width="92" height="16" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="1150" y="280" text-anchor="middle" dominant-baseline="middle" fill="#c8ccd8" font-size="11" font-family="Inter, system-ui, sans-serif">Release Prep</text>
+  <rect x="1139" y="283" width="22" height="13" fill="#0f1117" rx="3" opacity="0.85"/>
+  <text x="1150" y="293" text-anchor="middle" dominant-baseline="middle" fill="#457b9d" font-size="10" font-family="monospace">3d</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MILESTONES                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- m1: Kickoff (80,280) — single red -->
+  <circle cx="80" cy="280" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="80" cy="280" r="14" fill="#e63946" opacity="0.6"/>
+  <circle cx="80" cy="280" r="4" fill="#e8eaf0"/>
+  <text x="80" y="312" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Kickoff</text>
+
+  <!-- m2: Requirements (280,280) — red right + teal left (outer ring) -->
+  <circle cx="280" cy="280" r="24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+  <circle cx="280" cy="280" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <path d="M280 280L280 266A14 14 0 0 1 280 294Z" fill="#e63946" opacity="0.6"/>
+  <path d="M280 280L280 294A14 14 0 0 1 280 266Z" fill="#2a9d8f" opacity="0.6"/>
+  <circle cx="280" cy="280" r="4" fill="#e8eaf0"/>
+  <text x="280" y="312" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Requirements</text>
+
+  <!-- m3: Design Done (480,160) — single red -->
+  <circle cx="480" cy="160" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="480" cy="160" r="14" fill="#e63946" opacity="0.6"/>
+  <circle cx="480" cy="160" r="4" fill="#e8eaf0"/>
+  <text x="480" y="192" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Design Done</text>
+
+  <!-- m4: Backend Ready (480,400) — single teal -->
+  <circle cx="480" cy="400" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="480" cy="400" r="14" fill="#2a9d8f" opacity="0.6"/>
+  <circle cx="480" cy="400" r="4" fill="#e8eaf0"/>
+  <text x="480" y="432" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Backend Ready</text>
+
+  <!-- m5: Frontend Built (680,160) — single red -->
+  <circle cx="680" cy="160" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="680" cy="160" r="14" fill="#e63946" opacity="0.6"/>
+  <circle cx="680" cy="160" r="4" fill="#e8eaf0"/>
+  <text x="680" y="192" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Frontend Built</text>
+
+  <!-- m6: APIs Ready (680,400) — single teal -->
+  <circle cx="680" cy="400" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="680" cy="400" r="14" fill="#2a9d8f" opacity="0.6"/>
+  <circle cx="680" cy="400" r="4" fill="#e8eaf0"/>
+  <text x="680" y="432" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">APIs Ready</text>
+
+  <!-- m7: Integrated (880,280) — red+teal+blue three segments (outer ring) -->
+  <circle cx="880" cy="280" r="24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+  <circle cx="880" cy="280" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <!-- seg0 red: -90° to 30° -->
+  <path d="M880 280L880 266A14 14 0 0 1 892.12 287Z" fill="#e63946" opacity="0.6"/>
+  <!-- seg1 teal: 30° to 150° -->
+  <path d="M880 280L892.12 287A14 14 0 0 1 867.88 287Z" fill="#2a9d8f" opacity="0.6"/>
+  <!-- seg2 blue: 150° to 270° -->
+  <path d="M880 280L867.88 287A14 14 0 0 1 880 266Z" fill="#457b9d" opacity="0.6"/>
+  <circle cx="880" cy="280" r="4" fill="#e8eaf0"/>
+  <text x="880" y="312" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Integrated</text>
+
+  <!-- m8: QA Passed (1060,280) — single blue -->
+  <circle cx="1060" cy="280" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="1060" cy="280" r="14" fill="#457b9d" opacity="0.6"/>
+  <circle cx="1060" cy="280" r="4" fill="#e8eaf0"/>
+  <text x="1060" y="312" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">QA Passed</text>
+
+  <!-- m9: Launch (1240,280) — single blue -->
+  <circle cx="1240" cy="280" r="18" fill="#0f1117" stroke="#e8eaf0" stroke-width="2"/>
+  <circle cx="1240" cy="280" r="14" fill="#457b9d" opacity="0.6"/>
+  <circle cx="1240" cy="280" r="4" fill="#e8eaf0"/>
+  <text x="1240" y="312" text-anchor="middle" fill="#e8eaf0" font-size="12" font-family="Inter, system-ui, sans-serif" font-weight="500">Launch</text>
+</svg>
