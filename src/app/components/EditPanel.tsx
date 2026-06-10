@@ -208,6 +208,7 @@ export function EditPanel({
                 activityCount={diagram.activities.filter(a => a.pathId === path.id).length}
                 onUpdate={data => onUpdatePath(path.id, data)}
                 onDelete={() => onDeletePath(path.id)}
+                isSelected={selection.type === 'path' && selection.id === path.id}
               />
             ))}
             <button
@@ -249,13 +250,18 @@ export function EditPanel({
   );
 }
 
-function PathEditor({ path, activityCount, onUpdate, onDelete }: {
+function PathEditor({ path, activityCount, onUpdate, onDelete, isSelected }: {
   path: Path;
   activityCount: number;
   onUpdate: (d: Partial<Path>) => void;
   onDelete: () => void;
+  isSelected?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSelected) setOpen(true);
+  }, [isSelected]);
   return (
     <div className="border border-border rounded overflow-hidden">
       <div

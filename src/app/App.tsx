@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Diagram, Milestone, Activity, Path, Selection } from './types';
 import { DiagramCanvas, DiagramCanvasHandle } from './components/DiagramCanvas';
 import { EditPanel } from './components/EditPanel';
@@ -182,9 +182,15 @@ export default function App() {
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Delete' && e.key !== 'Backspace') return;
       const tag = (e.target as HTMLElement).tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      if (e.key === 'Escape') {
+        setSelection({ type: null, id: null });
+        return;
+      }
+
+      if (e.key !== 'Delete' && e.key !== 'Backspace') return;
       if (!selection.id) return;
       e.preventDefault();
       if (selection.type === 'milestone') handleDeleteMilestone(selection.id);
@@ -225,10 +231,15 @@ export default function App() {
       {/* Path legend */}
       <div className="flex items-center gap-4 px-4 py-1.5 bg-card border-b border-border shrink-0 overflow-x-auto">
         {diagram.paths.map(p => (
-          <div key={p.id} className="flex items-center gap-1.5 shrink-0">
+          <button
+            key={p.id}
+            className="flex items-center gap-1.5 shrink-0 hover:opacity-100 opacity-70 transition-opacity cursor-pointer"
+            title="Click to edit this line"
+            onClick={() => { setPanelTab('paths'); setSelection({ type: 'path', id: p.id }); }}
+          >
             <div className="w-8 h-0.5" style={{ background: p.color }} />
             <span className="text-xs text-muted-foreground">{p.name}</span>
-          </div>
+          </button>
         ))}
         {showCritical && (
           <div className="flex items-center gap-1.5 shrink-0 ml-2 border-l border-border pl-4">

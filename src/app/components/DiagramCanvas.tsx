@@ -232,6 +232,14 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
   };
 
   useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setConnecting(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       const svg = svgRef.current;

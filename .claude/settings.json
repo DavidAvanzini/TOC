@@ -4,7 +4,10 @@
       "Bash(Remove-Item -Force \"C:/Users/Hitachi/Documents/Mine/Projects/TOC/.git/index.lock\")",
       "Bash(rm \"C:/Users/Hitachi/Documents/Mine/Projects/TOC/.git/index.lock\")",
       "Bash(git add *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Hitachi\\Documents\\Mine\\Projects\\TOC\\.git"
