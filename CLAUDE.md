@@ -18,6 +18,7 @@ TOC lets users build, visualise, and analyse project networks made of **stations
 | **Activity** | A directed arc from one station to another, carrying a name, duration, and path membership. |
 | **Line / Path** | A named, coloured grouping for activities (e.g. "Line A", "Line B"). Activities on the same line share a colour. |
 | **Critical Path** | The set of activities with zero total float — computed in real time and rendered as a dashed yellow overlay. |
+| **Start / Target** | Optional role markers on stations: one project Start (green double ring) and one Target / end (amber double ring). |
 
 ---
 
@@ -32,13 +33,16 @@ src/
     utils/
       cpm.ts                CPM engine (forward pass, backward pass, float, cycle detection)
     components/
-      Toolbar.tsx           Top bar: title input, tool selector, active-line picker, critical toggle, file actions
-      DiagramCanvas.tsx     SVG canvas: drag-to-move stations, drag-between-stations to create activities
+      Toolbar.tsx           Top bar: title input, tool selector, active-line picker, critical toggle, theme toggle, export, file actions
+      DiagramCanvas.tsx     SVG canvas: drag/click-to-connect stations, pan/zoom, role badges, ongoing overlays
       EditPanel.tsx         Right panel: tabbed editor for the selected element, path manager, consistency checker
       ui/                   shadcn-ui primitive components (buttons, inputs, dialogs, etc.)
       figma/
         ImageWithFallback.tsx  Figma-generated image helper
   styles/                   Tailwind, theme, and font CSS files
+examples/
+  mobile-app-launch.json          Sample diagram (9 stations, 3 lines, 47-day critical path)
+  mobile-app-launch-preview.svg   SVG preview image used in README
 ```
 
 ---
@@ -48,6 +52,21 @@ src/
 All diagram state is held in a single `Diagram` object in `App.tsx` and persisted to **`localStorage`** (key: `toc-diagram`) on every change. On load, the saved state is restored automatically. There is no backend.
 
 `computedActivities` and `consistencyIssues` are derived with `useMemo` — never stored, always recalculated.
+
+### Data model highlights (`src/app/types.ts`)
+
+```ts
+interface Activity {
+  // ...core fields...
+  isOngoing?: boolean;          // renders animated green marching-ants overlay
+}
+
+interface Diagram {
+  // ...core fields...
+  startMilestoneId?: string | null;   // green double ring + START badge
+  endMilestoneId?:   string | null;   // amber double ring + TARGET badge
+}
+```
 
 ---
 
@@ -67,9 +86,9 @@ All diagram state is held in a single `Diagram` object in `App.tsx` and persiste
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  Toolbar (title · tools · active line · critical toggle · file) │
+│  Toolbar (title · tools · active line · critical toggle · theme · export · file) │
 ├──────────────────────────────────────────────────────────────┤
-│  Path legend                                  stats           │
+│  Path legend (clickable)              stats · ongoing · critical focus │
 ├──────────────────────────────┬───────────────────────────────┤
 │                              │  Edit Panel (right sidebar)   │
 │       DiagramCanvas (SVG)    │  ┌─ Element ─ Paths ─ Check ─┐ │
@@ -84,9 +103,9 @@ All diagram state is held in a single `Diagram` object in `App.tsx` and persiste
 
 | Tool | Toolbar button | Interaction |
 |------|---------------|-------------|
-| **Select** | MousePointer | Click to select stations/activities; drag stations to reposition |
+| **Select** | MousePointer | Click to select stations/activities; drag stations to reposition; Del to delete selection; Esc to deselect |
 | **Station** | Circle | Click on the canvas to place a new station |
-| **Activity** | GitCommitHorizontal | Drag from one station to another; uses the currently active line colour |
+| **Activity** | GitCommitHorizontal | Drag from one station to another, **or** click first station then click second; uses the active line colour; Esc cancels in-progress connection |
 
 ---
 
@@ -97,6 +116,20 @@ All diagram state is held in a single `Diagram` object in `App.tsx` and persiste
 | **New** | Resets to the built-in sample diagram (with confirmation prompt) |
 | **Save** | Downloads the diagram as `<title>.json` |
 | **Load** | Opens a JSON file and replaces the current diagram |
+| **Export PNG** | Renders canvas at 2× resolution with clean background — ready for PowerPoint and email |
+
+---
+
+## Canvas features
+
+| Feature | Detail |
+|---------|--------|
+| **Pan** | Click-drag on empty canvas |
+| **Zoom** | Mouse wheel |
+| **Critical path focus** | Click the "N critical" stat counter to dim non-critical elements; click again or press Esc to exit |
+| **Ongoing activities** | Toggle "In progress" in the activity editor → animated green marching-ants overlay |
+| **Start / Target roles** | Select a station → click ▶ Start or ◼ Target in the editor; only one of each per project |
+| **Theme** | Light / dark toggle in the toolbar |
 
 ---
 
@@ -131,7 +164,7 @@ docker run --rm -p 4173:4173 toc-editor
 | Component primitives | Radix UI + shadcn-ui wrappers |
 | Icons | lucide-react |
 | Drag & drop | react-dnd + HTML5 backend |
-| Package manager | npm (pnpm workspace file present but npm used inside Docker) |
+| Package manager | npm |
 
 ---
 
@@ -143,3 +176,4 @@ docker run --rm -p 4173:4173 toc-editor
 - **Add edit panel tabs** → `src/app/components/EditPanel.tsx`
 - **Change data model** → `src/app/types.ts` (then update `App.tsx` and `cpm.ts`)
 - **Change container startup** → `Dockerfile` + `package.json` `preview` script
+- **Add/edit example diagrams** → `examples/`
