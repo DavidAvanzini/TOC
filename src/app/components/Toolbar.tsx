@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
-import { MousePointer2, Circle, GitCommitHorizontal, Save, FolderOpen, Plus, Eye, EyeOff, Sun, Moon, FileImage } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { MousePointer2, Circle, GitCommitHorizontal, Save, FolderOpen, Plus, Eye, EyeOff, Sun, Moon, FileImage, Info } from 'lucide-react';
 import { Diagram, Path } from '../types';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
 interface Props {
   tool: 'select' | 'add-milestone' | 'add-activity';
@@ -22,6 +23,7 @@ interface Props {
 
 export function Toolbar({ tool, onToolChange, showCritical, onToggleCritical, title, onTitleChange, paths, activePathId, onActivePathChange, onSave, onLoad, onNew, theme, onToggleTheme, onExport }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   const handleLoad = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -128,6 +130,42 @@ export function Toolbar({ tool, onToolChange, showCritical, onToggleCritical, ti
         {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
         {theme === 'dark' ? 'Light' : 'Dark'}
       </button>
+
+      <div className="w-px h-6 bg-border mx-1" />
+
+      {/* About */}
+      <button className={actionBtn} onClick={() => setAboutOpen(true)} title="About">
+        <Info size={14} /> About
+      </button>
+
+      <Dialog open={aboutOpen} onOpenChange={setAboutOpen}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="tracking-wide uppercase text-primary">Train of Consequences</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            A browser-based Critical Path Method (CPM) diagram editor. Build project networks from stations and activities — the CPM engine highlights the critical path in real time.
+          </p>
+          <div className="flex flex-col gap-2 text-sm">
+            <div className="flex items-center justify-between border-t border-border pt-3">
+              <span className="text-muted-foreground">Author</span>
+              <span className="text-foreground font-medium">David Avanzini</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">LinkedIn</span>
+              <a href="https://www.linkedin.com/in/davidavanzini/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">davidavanzini</a>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">GitHub</span>
+              <a href="https://github.com/DavidAvanzini/TOC" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">DavidAvanzini/TOC</a>
+            </div>
+            <div className="flex items-center justify-between border-t border-border pt-3">
+              <span className="text-muted-foreground">License</span>
+              <span className="text-foreground">MIT © 2026 David Avanzini</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }
