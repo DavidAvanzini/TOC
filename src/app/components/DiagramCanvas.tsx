@@ -21,6 +21,8 @@ interface Props {
   showCritical: boolean;
   criticalFocus: boolean;
   theme: 'dark' | 'light';
+  startMilestoneId?: string | null;
+  endMilestoneId?: string | null;
 }
 
 function snapToGrid(v: number) {
@@ -40,6 +42,8 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
   showCritical,
   criticalFocus,
   theme,
+  startMilestoneId,
+  endMilestoneId,
 }, ref) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [dragging, setDragging] = useState<{ id: string; ox: number; oy: number } | null>(null);
@@ -459,6 +463,23 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
             onMouseUp={e => handleMilestoneMouseUp(e, m)}
             onClick={e => { e.stopPropagation(); if (tool === 'select') onSelectMilestone(m.id); }}
           >
+            {/* Start / Target role rings + badges */}
+            {startMilestoneId === m.id && (
+              <>
+                <circle cx={m.x} cy={m.y} r={STATION_RADIUS + 10} fill="none" stroke="#22c55e" strokeWidth="2" opacity="0.9" />
+                <circle cx={m.x} cy={m.y} r={STATION_RADIUS + 6} fill="none" stroke="#22c55e" strokeWidth="1.5" opacity="0.5" />
+                <rect x={m.x - 20} y={m.y - STATION_RADIUS - 28} width={40} height={15} rx="4" fill="#22c55e" opacity="0.9" />
+                <text x={m.x} y={m.y - STATION_RADIUS - 18} textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="700" style={{ fontFamily: 'Inter, sans-serif', pointerEvents: 'none', letterSpacing: '0.05em' }}>START</text>
+              </>
+            )}
+            {endMilestoneId === m.id && (
+              <>
+                <circle cx={m.x} cy={m.y} r={STATION_RADIUS + 10} fill="none" stroke="#f59e0b" strokeWidth="2" opacity="0.9" />
+                <circle cx={m.x} cy={m.y} r={STATION_RADIUS + 6} fill="none" stroke="#f59e0b" strokeWidth="1.5" opacity="0.5" />
+                <rect x={m.x - 23} y={m.y - STATION_RADIUS - 28} width={46} height={15} rx="4" fill="#f59e0b" opacity="0.9" />
+                <text x={m.x} y={m.y - STATION_RADIUS - 18} textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="700" style={{ fontFamily: 'Inter, sans-serif', pointerEvents: 'none', letterSpacing: '0.05em' }}>TARGET</text>
+              </>
+            )}
             {/* Outer ring for transfer stations */}
             {uniqueColors.length > 1 && (
               <circle cx={m.x} cy={m.y} r={STATION_RADIUS + 6} fill="none" stroke={colors.ringStroke} strokeWidth="2" />

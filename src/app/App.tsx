@@ -39,6 +39,8 @@ function emptyDiagram(): Diagram {
       { id: uid(), name: 'QA', description: '', fromMilestoneId: m4, toMilestoneId: m5, pathId: pathId2, duration: 6 },
       { id: uid(), name: 'Ship', description: '', fromMilestoneId: m5, toMilestoneId: m6, pathId, duration: 3 },
     ],
+    startMilestoneId: m1,
+    endMilestoneId: m6,
   };
 }
 
@@ -111,8 +113,18 @@ export default function App() {
       ...d,
       milestones: d.milestones.filter(m => m.id !== id),
       activities: d.activities.filter(a => a.fromMilestoneId !== id && a.toMilestoneId !== id),
+      startMilestoneId: d.startMilestoneId === id ? null : d.startMilestoneId,
+      endMilestoneId: d.endMilestoneId === id ? null : d.endMilestoneId,
     }));
     setSelection({ type: null, id: null });
+  }, []);
+
+  const handleSetStartMilestone = useCallback((id: string | null) => {
+    setDiagram(d => ({ ...d, startMilestoneId: id }));
+  }, []);
+
+  const handleSetEndMilestone = useCallback((id: string | null) => {
+    setDiagram(d => ({ ...d, endMilestoneId: id }));
   }, []);
 
   const handleConnectMilestones = useCallback((fromId: string, toId: string) => {
@@ -283,6 +295,8 @@ export default function App() {
             showCritical={showCritical}
             criticalFocus={criticalFocus}
             theme={theme}
+            startMilestoneId={diagram.startMilestoneId}
+            endMilestoneId={diagram.endMilestoneId}
           />
           {tool !== 'select' && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-card border border-border rounded px-4 py-2 text-xs text-muted-foreground pointer-events-none shadow-lg">
@@ -306,6 +320,8 @@ export default function App() {
           onAddPath={handleAddPath}
           activeTab={panelTab}
           onTabChange={setPanelTab}
+          onSetStartMilestone={handleSetStartMilestone}
+          onSetEndMilestone={handleSetEndMilestone}
         />
       </div>
     </div>

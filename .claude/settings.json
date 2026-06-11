@@ -7,7 +7,9 @@
       "Bash(git rm *)",
       "Bash(git commit -m ' *)",
       "Bash(git remote *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(npx tsc *)",
+      "Bash(node_modules/.bin/tsc --noEmit)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Hitachi\\Documents\\Mine\\Projects\\TOC\\.git"

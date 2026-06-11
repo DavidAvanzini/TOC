@@ -22,6 +22,8 @@ interface Props {
   onAddPath: () => void;
   activeTab: 'element' | 'paths' | 'consistency';
   onTabChange: (t: 'element' | 'paths' | 'consistency') => void;
+  onSetStartMilestone: (id: string | null) => void;
+  onSetEndMilestone: (id: string | null) => void;
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -74,6 +76,7 @@ export function EditPanel({
   onUpdateActivity, onDeleteActivity,
   onUpdatePath, onDeletePath, onAddPath,
   activeTab, onTabChange,
+  onSetStartMilestone, onSetEndMilestone,
 }: Props) {
   const selectedMilestone = selection.type === 'milestone' ? diagram.milestones.find(m => m.id === selection.id) : null;
   const selectedActivity = selection.type === 'activity' ? diagram.activities.find(a => a.id === selection.id) : null;
@@ -137,6 +140,40 @@ export function EditPanel({
                 <Field label="Description">
                   <TextArea value={selectedMilestone.description} onChange={v => onUpdateMilestone(selectedMilestone.id, { description: v })} placeholder="Optional description" />
                 </Field>
+                {/* Role: Start / Target */}
+                {(() => {
+                  const isStart = diagram.startMilestoneId === selectedMilestone.id;
+                  const isEnd   = diagram.endMilestoneId   === selectedMilestone.id;
+                  const btnBase = 'flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded text-xs font-medium border transition-colors';
+                  return (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => onSetStartMilestone(isStart ? null : selectedMilestone.id)}
+                        disabled={isEnd}
+                        title={isEnd ? 'Already set as Target' : isStart ? 'Remove Start marker' : 'Set as project Start'}
+                        className={`${btnBase} ${isStart
+                          ? 'bg-green-600/20 text-green-400 border-green-600/40'
+                          : isEnd
+                            ? 'opacity-30 cursor-not-allowed text-muted-foreground border-border'
+                            : 'text-muted-foreground border-border hover:border-green-600/40 hover:text-green-400'}`}
+                      >
+                        ▶ Start
+                      </button>
+                      <button
+                        onClick={() => onSetEndMilestone(isEnd ? null : selectedMilestone.id)}
+                        disabled={isStart}
+                        title={isStart ? 'Already set as Start' : isEnd ? 'Remove Target marker' : 'Set as project Target'}
+                        className={`${btnBase} ${isEnd
+                          ? 'bg-amber-600/20 text-amber-400 border-amber-600/40'
+                          : isStart
+                            ? 'opacity-30 cursor-not-allowed text-muted-foreground border-border'
+                            : 'text-muted-foreground border-border hover:border-amber-600/40 hover:text-amber-400'}`}
+                      >
+                        ◼ Target
+                      </button>
+                    </div>
+                  );
+                })()}
                 <div className="border border-border rounded p-2 text-xs text-muted-foreground flex flex-col gap-1">
                   <span>Position: <span className="text-foreground mono">{selectedMilestone.x}, {selectedMilestone.y}</span></span>
                   <span>Connected activities: <span className="text-foreground">{diagram.activities.filter(a => a.fromMilestoneId === selectedMilestone.id || a.toMilestoneId === selectedMilestone.id).length}</span></span>

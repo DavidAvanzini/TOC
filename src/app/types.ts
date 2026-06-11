@@ -35,6 +35,8 @@ export interface Diagram {
   milestones: Milestone[];
   activities: Activity[];
   paths: Path[];
+  startMilestoneId?: string | null;
+  endMilestoneId?: string | null;
 }
 
 export type SelectionType = 'milestone' | 'activity' | 'path' | null;
