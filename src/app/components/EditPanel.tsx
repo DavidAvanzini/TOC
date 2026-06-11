@@ -120,6 +120,8 @@ export function EditPanel({
               <div className="text-muted-foreground text-xs text-center mt-8">
                 <p className="mb-1">Click a milestone or activity</p>
                 <p>to edit its properties.</p>
+                <p>Press Delete to remove.</p>
+                <p>Press Esc to deselect.</p>
               </div>
             )}
 
