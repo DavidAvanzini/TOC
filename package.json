@@ -14,6 +14,7 @@
   "build": {
     "appId": "com.davidavanzini.toc",
     "productName": "Train of Consequences",
+    "artifactName": "ToC-v${version}.${ext}",
     "copyright": "Copyright © 2026 David Avanzini",
     "directories": {
       "output": "dist-electron"
