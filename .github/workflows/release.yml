@@ -1,15 +1,53 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: write
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.bump.outputs.tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        id: bump
+        run: |
+          TAG=$(npm version ${{ inputs.bump }})
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Push commit and tag
+        run: git push && git push --tags
+
   build:
+    needs: version
     strategy:
       fail-fast: false
       matrix:
@@ -27,8 +65,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout
+      - name: Checkout tag
         uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.version.outputs.tag }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,10 +78,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Set version from tag
-        shell: bash
-        run: npm version ${GITHUB_REF_NAME#v} --no-git-tag-version
 
       - name: Build web assets
         run: npm run build
@@ -58,7 +94,7 @@ jobs:
           path: ${{ matrix.artifact }}
 
   release:
-    needs: build
+    needs: [version, build]
     runs-on: ubuntu-latest
 
     steps:
@@ -71,6 +107,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Train of Consequences ${{ github.ref_name }}"
+          tag_name: ${{ needs.version.outputs.tag }}
+          name: "Train of Consequences ${{ needs.version.outputs.tag }}"
           files: installers/*
           generate_release_notes: true
