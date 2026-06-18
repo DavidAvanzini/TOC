@@ -216,8 +216,10 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
     e.stopPropagation();
     if (tool === 'select') {
       onSelectMilestone(m.id);
-      const pos = toSVG(e.clientX, e.clientY);
-      setDragging({ id: m.id, ox: pos.x - m.x, oy: pos.y - m.y });
+      if (e.ctrlKey) {
+        const pos = toSVG(e.clientX, e.clientY);
+        setDragging({ id: m.id, ox: pos.x - m.x, oy: pos.y - m.y });
+      }
     } else if (tool === 'add-activity') {
       if (connecting && connecting.fromId !== m.id) {
         // Second click — complete the connection (click-to-click mode)
@@ -458,7 +460,7 @@ export const DiagramCanvas = forwardRef<DiagramCanvasHandle, Props>(function Dia
           <g
             key={m.id}
             opacity={mDimmed ? 0.15 : 1}
-            style={{ cursor: tool === 'select' ? 'grab' : 'crosshair' }}
+            style={{ cursor: tool === 'select' ? (dragging?.id === m.id ? 'grabbing' : 'pointer') : 'crosshair' }}
             onMouseDown={e => handleMilestoneMouseDown(e, m)}
             onMouseUp={e => handleMilestoneMouseUp(e, m)}
             onClick={e => { e.stopPropagation(); if (tool === 'select') onSelectMilestone(m.id); }}

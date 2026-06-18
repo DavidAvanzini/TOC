@@ -117,11 +117,11 @@ export function EditPanel({
         {activeTab === 'element' && (
           <>
             {!selection.id && (
-              <div className="text-muted-foreground text-xs text-center mt-8">
-                <p className="mb-1">Click a milestone or activity</p>
-                <p>to edit its properties.</p>
-                <p>Press Delete to remove.</p>
-                <p>Press Esc to deselect.</p>
+              <div className="text-muted-foreground text-xs text-center mt-8 flex flex-col gap-1">
+                <p>Click a milestone or activity to edit its properties.</p>
+                <p className="mt-1"><span className="text-foreground font-medium">Ctrl + drag</span> a station to move it.</p>
+                <p className="mt-1">Press <span className="text-foreground font-medium">Delete</span> to remove.</p>
+                <p>Press <span className="text-foreground font-medium">Esc</span> to deselect.</p>
               </div>
             )}
 

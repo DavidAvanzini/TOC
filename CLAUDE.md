@@ -103,7 +103,7 @@ interface Diagram {
 
 | Tool | Toolbar button | Interaction |
 |------|---------------|-------------|
-| **Select** | MousePointer | Click to select stations/activities; drag stations to reposition; Del to delete selection; Esc to deselect |
+| **Select** | MousePointer | Click to select stations/activities; **Ctrl+drag** a station to reposition it; Del to delete selection; Esc to deselect |
 | **Station** | Circle | Click on the canvas to place a new station |
 | **Activity** | GitCommitHorizontal | Drag from one station to another, **or** click first station then click second; uses the active line colour; Esc cancels in-progress connection |
 
